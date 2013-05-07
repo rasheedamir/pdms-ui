@@ -2,6 +2,10 @@ package com.mm.pdms
 
 import org.springframework.dao.DataIntegrityViolationException
 
+/**
+ * PosCallLogController
+ * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
+ */
 class PosCallLogController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -10,8 +14,8 @@ class PosCallLogController {
         redirect(action: "list", params: params)
     }
 
-    def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+    def list() {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [posCallLogInstanceList: PosCallLog.list(params), posCallLogInstanceTotal: PosCallLog.count()]
     }
 
@@ -26,14 +30,14 @@ class PosCallLogController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), posCallLogInstance.id])
+		flash.message = message(code: 'default.created.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), posCallLogInstance.id])
         redirect(action: "show", id: posCallLogInstance.id)
     }
 
-    def show(Long id) {
-        def posCallLogInstance = PosCallLog.get(id)
+    def show() {
+        def posCallLogInstance = PosCallLog.get(params.id)
         if (!posCallLogInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), params.id])
             redirect(action: "list")
             return
         }
@@ -41,10 +45,10 @@ class PosCallLogController {
         [posCallLogInstance: posCallLogInstance]
     }
 
-    def edit(Long id) {
-        def posCallLogInstance = PosCallLog.get(id)
+    def edit() {
+        def posCallLogInstance = PosCallLog.get(params.id)
         if (!posCallLogInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), params.id])
             redirect(action: "list")
             return
         }
@@ -52,15 +56,16 @@ class PosCallLogController {
         [posCallLogInstance: posCallLogInstance]
     }
 
-    def update(Long id, Long version) {
-        def posCallLogInstance = PosCallLog.get(id)
+    def update() {
+        def posCallLogInstance = PosCallLog.get(params.id)
         if (!posCallLogInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), params.id])
             redirect(action: "list")
             return
         }
 
-        if (version != null) {
+        if (params.version) {
+            def version = params.version.toLong()
             if (posCallLogInstance.version > version) {
                 posCallLogInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                           [message(code: 'posCallLog.label', default: 'PosCallLog')] as Object[],
@@ -77,26 +82,26 @@ class PosCallLogController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), posCallLogInstance.id])
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), posCallLogInstance.id])
         redirect(action: "show", id: posCallLogInstance.id)
     }
 
-    def delete(Long id) {
-        def posCallLogInstance = PosCallLog.get(id)
+    def delete() {
+        def posCallLogInstance = PosCallLog.get(params.id)
         if (!posCallLogInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), params.id])
             redirect(action: "list")
             return
         }
 
         try {
             posCallLogInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), id])
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), id])
-            redirect(action: "show", id: id)
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'posCallLog.label', default: 'PosCallLog'), params.id])
+            redirect(action: "show", id: params.id)
         }
     }
 }

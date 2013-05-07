@@ -2,6 +2,10 @@ package com.mm.pdms
 
 import org.springframework.dao.DataIntegrityViolationException
 
+/**
+ * KfGroupController
+ * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
+ */
 class KfGroupController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -10,8 +14,8 @@ class KfGroupController {
         redirect(action: "list", params: params)
     }
 
-    def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+    def list() {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [kfGroupInstanceList: KfGroup.list(params), kfGroupInstanceTotal: KfGroup.count()]
     }
 
@@ -26,14 +30,14 @@ class KfGroupController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), kfGroupInstance.id])
+		flash.message = message(code: 'default.created.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), kfGroupInstance.id])
         redirect(action: "show", id: kfGroupInstance.id)
     }
 
-    def show(Long id) {
-        def kfGroupInstance = KfGroup.get(id)
+    def show() {
+        def kfGroupInstance = KfGroup.get(params.id)
         if (!kfGroupInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), params.id])
             redirect(action: "list")
             return
         }
@@ -41,10 +45,10 @@ class KfGroupController {
         [kfGroupInstance: kfGroupInstance]
     }
 
-    def edit(Long id) {
-        def kfGroupInstance = KfGroup.get(id)
+    def edit() {
+        def kfGroupInstance = KfGroup.get(params.id)
         if (!kfGroupInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), params.id])
             redirect(action: "list")
             return
         }
@@ -52,15 +56,16 @@ class KfGroupController {
         [kfGroupInstance: kfGroupInstance]
     }
 
-    def update(Long id, Long version) {
-        def kfGroupInstance = KfGroup.get(id)
+    def update() {
+        def kfGroupInstance = KfGroup.get(params.id)
         if (!kfGroupInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), params.id])
             redirect(action: "list")
             return
         }
 
-        if (version != null) {
+        if (params.version) {
+            def version = params.version.toLong()
             if (kfGroupInstance.version > version) {
                 kfGroupInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                           [message(code: 'kfGroup.label', default: 'KfGroup')] as Object[],
@@ -77,26 +82,26 @@ class KfGroupController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), kfGroupInstance.id])
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), kfGroupInstance.id])
         redirect(action: "show", id: kfGroupInstance.id)
     }
 
-    def delete(Long id) {
-        def kfGroupInstance = KfGroup.get(id)
+    def delete() {
+        def kfGroupInstance = KfGroup.get(params.id)
         if (!kfGroupInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), params.id])
             redirect(action: "list")
             return
         }
 
         try {
             kfGroupInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), id])
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), id])
-            redirect(action: "show", id: id)
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'kfGroup.label', default: 'KfGroup'), params.id])
+            redirect(action: "show", id: params.id)
         }
     }
 }

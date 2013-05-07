@@ -5,14 +5,19 @@ package com.mm.pdms
 import org.junit.*
 import grails.test.mixin.*
 
+/**
+ * PackageGroupControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(PackageGroupController)
 @Mock(PackageGroup)
 class PackageGroupControllerTests {
 
+
     def populateValidParams(params) {
-        assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+      assert params != null
+      // TODO: Populate valid properties like...
+      //params["name"] = 'someValidName'
     }
 
     void testIndex() {
@@ -29,9 +34,9 @@ class PackageGroupControllerTests {
     }
 
     void testCreate() {
-        def model = controller.create()
+       def model = controller.create()
 
-        assert model.packageGroupInstance != null
+       assert model.packageGroupInstance != null
     }
 
     void testSave() {
@@ -56,6 +61,7 @@ class PackageGroupControllerTests {
         assert flash.message != null
         assert response.redirectedUrl == '/packageGroup/list'
 
+
         populateValidParams(params)
         def packageGroup = new PackageGroup(params)
 
@@ -73,6 +79,7 @@ class PackageGroupControllerTests {
 
         assert flash.message != null
         assert response.redirectedUrl == '/packageGroup/list'
+
 
         populateValidParams(params)
         def packageGroup = new PackageGroup(params)
@@ -93,6 +100,7 @@ class PackageGroupControllerTests {
         assert response.redirectedUrl == '/packageGroup/list'
 
         response.reset()
+
 
         populateValidParams(params)
         def packageGroup = new PackageGroup(params)

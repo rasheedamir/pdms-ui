@@ -5,14 +5,19 @@ package com.mm.pdms
 import org.junit.*
 import grails.test.mixin.*
 
+/**
+ * KfGroupControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(KfGroupController)
 @Mock(KfGroup)
 class KfGroupControllerTests {
 
+
     def populateValidParams(params) {
-        assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+      assert params != null
+      // TODO: Populate valid properties like...
+      //params["name"] = 'someValidName'
     }
 
     void testIndex() {
@@ -29,9 +34,9 @@ class KfGroupControllerTests {
     }
 
     void testCreate() {
-        def model = controller.create()
+       def model = controller.create()
 
-        assert model.kfGroupInstance != null
+       assert model.kfGroupInstance != null
     }
 
     void testSave() {
@@ -56,6 +61,7 @@ class KfGroupControllerTests {
         assert flash.message != null
         assert response.redirectedUrl == '/kfGroup/list'
 
+
         populateValidParams(params)
         def kfGroup = new KfGroup(params)
 
@@ -73,6 +79,7 @@ class KfGroupControllerTests {
 
         assert flash.message != null
         assert response.redirectedUrl == '/kfGroup/list'
+
 
         populateValidParams(params)
         def kfGroup = new KfGroup(params)
@@ -93,6 +100,7 @@ class KfGroupControllerTests {
         assert response.redirectedUrl == '/kfGroup/list'
 
         response.reset()
+
 
         populateValidParams(params)
         def kfGroup = new KfGroup(params)

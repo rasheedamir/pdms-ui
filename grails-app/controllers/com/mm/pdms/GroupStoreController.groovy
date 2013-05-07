@@ -2,6 +2,10 @@ package com.mm.pdms
 
 import org.springframework.dao.DataIntegrityViolationException
 
+/**
+ * GroupStoreController
+ * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
+ */
 class GroupStoreController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -10,8 +14,8 @@ class GroupStoreController {
         redirect(action: "list", params: params)
     }
 
-    def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+    def list() {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [groupStoreInstanceList: GroupStore.list(params), groupStoreInstanceTotal: GroupStore.count()]
     }
 
@@ -26,14 +30,14 @@ class GroupStoreController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), groupStoreInstance.id])
+		flash.message = message(code: 'default.created.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), groupStoreInstance.id])
         redirect(action: "show", id: groupStoreInstance.id)
     }
 
-    def show(Long id) {
-        def groupStoreInstance = GroupStore.get(id)
+    def show() {
+        def groupStoreInstance = GroupStore.get(params.id)
         if (!groupStoreInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), params.id])
             redirect(action: "list")
             return
         }
@@ -41,10 +45,10 @@ class GroupStoreController {
         [groupStoreInstance: groupStoreInstance]
     }
 
-    def edit(Long id) {
-        def groupStoreInstance = GroupStore.get(id)
+    def edit() {
+        def groupStoreInstance = GroupStore.get(params.id)
         if (!groupStoreInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), params.id])
             redirect(action: "list")
             return
         }
@@ -52,15 +56,16 @@ class GroupStoreController {
         [groupStoreInstance: groupStoreInstance]
     }
 
-    def update(Long id, Long version) {
-        def groupStoreInstance = GroupStore.get(id)
+    def update() {
+        def groupStoreInstance = GroupStore.get(params.id)
         if (!groupStoreInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), params.id])
             redirect(action: "list")
             return
         }
 
-        if (version != null) {
+        if (params.version) {
+            def version = params.version.toLong()
             if (groupStoreInstance.version > version) {
                 groupStoreInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                           [message(code: 'groupStore.label', default: 'GroupStore')] as Object[],
@@ -77,26 +82,26 @@ class GroupStoreController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), groupStoreInstance.id])
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), groupStoreInstance.id])
         redirect(action: "show", id: groupStoreInstance.id)
     }
 
-    def delete(Long id) {
-        def groupStoreInstance = GroupStore.get(id)
+    def delete() {
+        def groupStoreInstance = GroupStore.get(params.id)
         if (!groupStoreInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), params.id])
             redirect(action: "list")
             return
         }
 
         try {
             groupStoreInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), id])
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), id])
-            redirect(action: "show", id: id)
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'groupStore.label', default: 'GroupStore'), params.id])
+            redirect(action: "show", id: params.id)
         }
     }
 }

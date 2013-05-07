@@ -5,14 +5,19 @@ package com.mm.pdms
 import org.junit.*
 import grails.test.mixin.*
 
+/**
+ * GroupStoreControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(GroupStoreController)
 @Mock(GroupStore)
 class GroupStoreControllerTests {
 
+
     def populateValidParams(params) {
-        assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+      assert params != null
+      // TODO: Populate valid properties like...
+      //params["name"] = 'someValidName'
     }
 
     void testIndex() {
@@ -29,9 +34,9 @@ class GroupStoreControllerTests {
     }
 
     void testCreate() {
-        def model = controller.create()
+       def model = controller.create()
 
-        assert model.groupStoreInstance != null
+       assert model.groupStoreInstance != null
     }
 
     void testSave() {
@@ -56,6 +61,7 @@ class GroupStoreControllerTests {
         assert flash.message != null
         assert response.redirectedUrl == '/groupStore/list'
 
+
         populateValidParams(params)
         def groupStore = new GroupStore(params)
 
@@ -73,6 +79,7 @@ class GroupStoreControllerTests {
 
         assert flash.message != null
         assert response.redirectedUrl == '/groupStore/list'
+
 
         populateValidParams(params)
         def groupStore = new GroupStore(params)
@@ -93,6 +100,7 @@ class GroupStoreControllerTests {
         assert response.redirectedUrl == '/groupStore/list'
 
         response.reset()
+
 
         populateValidParams(params)
         def groupStore = new GroupStore(params)

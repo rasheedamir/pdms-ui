@@ -2,6 +2,10 @@ package com.mm.pdms
 
 import org.springframework.dao.DataIntegrityViolationException
 
+/**
+ * PackageVersionController
+ * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
+ */
 class PackageVersionController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -10,8 +14,8 @@ class PackageVersionController {
         redirect(action: "list", params: params)
     }
 
-    def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+    def list() {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [packageVersionInstanceList: PackageVersion.list(params), packageVersionInstanceTotal: PackageVersion.count()]
     }
 
@@ -26,14 +30,14 @@ class PackageVersionController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), packageVersionInstance.id])
+		flash.message = message(code: 'default.created.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), packageVersionInstance.id])
         redirect(action: "show", id: packageVersionInstance.id)
     }
 
-    def show(Long id) {
-        def packageVersionInstance = PackageVersion.get(id)
+    def show() {
+        def packageVersionInstance = PackageVersion.get(params.id)
         if (!packageVersionInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), params.id])
             redirect(action: "list")
             return
         }
@@ -41,10 +45,10 @@ class PackageVersionController {
         [packageVersionInstance: packageVersionInstance]
     }
 
-    def edit(Long id) {
-        def packageVersionInstance = PackageVersion.get(id)
+    def edit() {
+        def packageVersionInstance = PackageVersion.get(params.id)
         if (!packageVersionInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), params.id])
             redirect(action: "list")
             return
         }
@@ -52,15 +56,16 @@ class PackageVersionController {
         [packageVersionInstance: packageVersionInstance]
     }
 
-    def update(Long id, Long version) {
-        def packageVersionInstance = PackageVersion.get(id)
+    def update() {
+        def packageVersionInstance = PackageVersion.get(params.id)
         if (!packageVersionInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), params.id])
             redirect(action: "list")
             return
         }
 
-        if (version != null) {
+        if (params.version) {
+            def version = params.version.toLong()
             if (packageVersionInstance.version > version) {
                 packageVersionInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                           [message(code: 'packageVersion.label', default: 'PackageVersion')] as Object[],
@@ -77,26 +82,26 @@ class PackageVersionController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), packageVersionInstance.id])
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), packageVersionInstance.id])
         redirect(action: "show", id: packageVersionInstance.id)
     }
 
-    def delete(Long id) {
-        def packageVersionInstance = PackageVersion.get(id)
+    def delete() {
+        def packageVersionInstance = PackageVersion.get(params.id)
         if (!packageVersionInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), params.id])
             redirect(action: "list")
             return
         }
 
         try {
             packageVersionInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), id])
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), id])
-            redirect(action: "show", id: id)
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'packageVersion.label', default: 'PackageVersion'), params.id])
+            redirect(action: "show", id: params.id)
         }
     }
 }

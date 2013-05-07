@@ -5,14 +5,19 @@ package com.mm.pdms
 import org.junit.*
 import grails.test.mixin.*
 
+/**
+ * PosCallLogControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(PosCallLogController)
 @Mock(PosCallLog)
 class PosCallLogControllerTests {
 
+
     def populateValidParams(params) {
-        assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+      assert params != null
+      // TODO: Populate valid properties like...
+      //params["name"] = 'someValidName'
     }
 
     void testIndex() {
@@ -29,9 +34,9 @@ class PosCallLogControllerTests {
     }
 
     void testCreate() {
-        def model = controller.create()
+       def model = controller.create()
 
-        assert model.posCallLogInstance != null
+       assert model.posCallLogInstance != null
     }
 
     void testSave() {
@@ -56,6 +61,7 @@ class PosCallLogControllerTests {
         assert flash.message != null
         assert response.redirectedUrl == '/posCallLog/list'
 
+
         populateValidParams(params)
         def posCallLog = new PosCallLog(params)
 
@@ -73,6 +79,7 @@ class PosCallLogControllerTests {
 
         assert flash.message != null
         assert response.redirectedUrl == '/posCallLog/list'
+
 
         populateValidParams(params)
         def posCallLog = new PosCallLog(params)
@@ -93,6 +100,7 @@ class PosCallLogControllerTests {
         assert response.redirectedUrl == '/posCallLog/list'
 
         response.reset()
+
 
         populateValidParams(params)
         def posCallLog = new PosCallLog(params)

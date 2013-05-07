@@ -5,14 +5,19 @@ package com.mm.pdms
 import org.junit.*
 import grails.test.mixin.*
 
+/**
+ * PackageVersionControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(PackageVersionController)
 @Mock(PackageVersion)
 class PackageVersionControllerTests {
 
+
     def populateValidParams(params) {
-        assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+      assert params != null
+      // TODO: Populate valid properties like...
+      //params["name"] = 'someValidName'
     }
 
     void testIndex() {
@@ -29,9 +34,9 @@ class PackageVersionControllerTests {
     }
 
     void testCreate() {
-        def model = controller.create()
+       def model = controller.create()
 
-        assert model.packageVersionInstance != null
+       assert model.packageVersionInstance != null
     }
 
     void testSave() {
@@ -56,6 +61,7 @@ class PackageVersionControllerTests {
         assert flash.message != null
         assert response.redirectedUrl == '/packageVersion/list'
 
+
         populateValidParams(params)
         def packageVersion = new PackageVersion(params)
 
@@ -73,6 +79,7 @@ class PackageVersionControllerTests {
 
         assert flash.message != null
         assert response.redirectedUrl == '/packageVersion/list'
+
 
         populateValidParams(params)
         def packageVersion = new PackageVersion(params)
@@ -93,6 +100,7 @@ class PackageVersionControllerTests {
         assert response.redirectedUrl == '/packageVersion/list'
 
         response.reset()
+
 
         populateValidParams(params)
         def packageVersion = new PackageVersion(params)
