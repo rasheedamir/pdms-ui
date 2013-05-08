@@ -9,10 +9,7 @@
 
 	<section id="intro">
 		<p class="lead">
-			For ongoing information about ${meta(name:'app.name')}, please read our company 
-			<a href="http://wordpress.com/signup/">blog</a>. Also, feel free to
-			contact us with service questions, partnership proposals, or media
-			inquiries.
+			For any queries please contact Rasheed Amir.
 		</p>
 	</section>
 
@@ -21,9 +18,9 @@
 		<div class="span4">
 			<h1><g:message code="default.contact.address"/></h1>
 				<address>
-					<strong>${meta(name:'app.name')}, Inc.</strong><br>
-					 123 Future Ave<br>
-					 San Francisco, CA 94107<br>
+					<strong>MedMera AB</strong><br>
+					 Borgarfjordsgatan 7 (plan 5), KISTA<br>
+					 Stockholm, Sweden<br>
 					 <br>
 				</address>
 				<address>
@@ -32,15 +29,7 @@
 							<strong><abbr title="Phone">Phone</abbr></strong>
 						</span>
 						<span class="span3">
-							(123) 456-7890
-						</span>
-					</div>
-					<div class="row">
-						<span class="span1">
-							<strong><abbr title="Fax">Fax</abbr></strong>
-						</span>
-						<span class="span3">
-					    +49 (0) 72 27 - 95 35 - 605
+							(+46) 08-6331300
 						</span>
 					</div>
 				</address>
@@ -50,16 +39,16 @@
 							<strong>Email</strong>
 						</span>
 						<span class="span3">
-					    	<a href="mailto:info@${meta(name:'app.name')}.com">info@${meta(name:'app.name')}.com</a>
+					    	<a href="mailto:rasheed.amir@r2m.com">rasheed.amir@r2m.com</a>
 						</span>
 					</div>
 				</address>
 			</div>
 			
 			<div class="span8">
-				<iframe width="100%" scrolling="no" height="300" frameborder="0" 
-					src="http://maps.google.ca/maps?f=q&source=s_q&hl=en&geocode=&q=123+Future+Ave,San+Francisco,+CA+94107&ie=UTF8&hq=&hnear=Downtown,San+Francisco,+CA+94107&z=12&iwloc=near&output=embed"
-		 			marginwidth="0" marginheight="0"></iframe>
+				<iframe width="100%" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 
+				src="https://maps.google.se/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Borgarfjordsgatan+7+(plan+5),+KISTA&amp;aq=&amp;sll=62.033002,17.378555&amp;sspn=35.41036,135.263672&amp;t=h&amp;ie=UTF8&amp;hq=Borgarfjordsgatan+7+(plan+5),+KISTA&amp;hnear=&amp;radius=15000&amp;z=13&amp;iwloc=A&amp;cid=10271117946456976262&amp;ll=59.406709,17.947143&amp;output=embed">
+				</iframe>
 			</div>
 		</div>
 	</section>

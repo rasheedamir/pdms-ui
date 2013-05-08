@@ -1,3 +1,5 @@
+import grails.plugins.springsecurity.SecurityConfigType
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -11,7 +13,7 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
+grails.project.groupId = "com.mm.pdms" // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
 grails.mime.types = [
@@ -95,3 +97,13 @@ grails.config.defaults.locations = [KickstartResources]
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.mm.pdms.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.mm.pdms.UserRole'
 grails.plugins.springsecurity.authority.className = 'com.mm.pdms.Role'
+grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
+grails.plugins.springsecurity.interceptUrlMap = [
+	'/kfGroup/*':         		['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'],
+	'/packageGroup/*':	  		['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'],
+	'/packageVersion/*':  		['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'],
+	'/groupStore/*':  	  		['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'],		
+	'/posAssemblyLog/*':  	  	['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'],
+	'/posCallLog/*':  	  		['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'],
+	'/**':                		['IS_AUTHENTICATED_ANONYMOUSLY']
+]

@@ -10,8 +10,15 @@
 	<section id="intro">
 		<h1><g:message code="default.welcome.title" args="[meta(name:'app.name')]"/></h1>
 		<p class="lead">
-			${meta(name:'app.name')}
-			is the hottest System since sliced bread!
+			PDMS-UI allows to:
+			<ol>
+				<li> Manage Package Versions </li>
+				<li> Manage Groups </li>
+				<li> Manage Package Groups </li>
+				<li> Manage Group Stores </li>
+				<li> Manage Pos Call Logs </li>												
+				<li> Manage Pos Assembly Logs </li>												
+			</ol>	
 		</p>
 	</section>
 
