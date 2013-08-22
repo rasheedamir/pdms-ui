@@ -17,6 +17,8 @@
 		<thead>
 			<tr>
 			
+				<g:sortableColumn property="id" title="${message(code: 'groupStore.id.label', default: 'Id')}" />
+
 				<g:sortableColumn property="kfStoreId" title="${message(code: 'groupStore.kfStoreId.label', default: 'Kf Store Id')}" />
 			
 				<th><g:message code="groupStore.kfGroup.label" default="Kf Group" /></th>
@@ -29,7 +31,9 @@
 		<g:each in="${groupStoreInstanceList}" status="i" var="groupStoreInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 			
-				<td><g:link action="show" id="${groupStoreInstance.id}">${fieldValue(bean: groupStoreInstance, field: "kfStoreId")}</g:link></td>
+				<td><g:link action="show" id="${groupStoreInstance.id}">${fieldValue(bean: groupStoreInstance, field: "id")}</g:link></td>
+
+				<td>${fieldValue(bean: groupStoreInstance, field: "kfStoreId")}</td>
 			
 				<td>${fieldValue(bean: groupStoreInstance, field: "kfGroup")}</td>
 			

@@ -16,6 +16,8 @@
 	<table class="table table-bordered">
 		<thead>
 			<tr>
+
+				<g:sortableColumn property="id" title="${message(code: 'packageVersion.id.label', default: 'Id')}" />
 			
 				<g:sortableColumn property="versionNumber" title="${message(code: 'packageVersion.versionNumber.label', default: 'Version Number')}" />
 			
@@ -30,8 +32,10 @@
 		<tbody>
 		<g:each in="${packageVersionInstanceList}" status="i" var="packageVersionInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+
+				<td><g:link action="show" id="${packageVersionInstance.id}">${fieldValue(bean: packageVersionInstance, field: "id")}</g:link></td>
 			
-				<td><g:link action="show" id="${packageVersionInstance.id}">${fieldValue(bean: packageVersionInstance, field: "versionNumber")}</g:link></td>
+				<td>${fieldValue(bean: packageVersionInstance, field: "versionNumber")}</td>
 			
 				<td>${fieldValue(bean: packageVersionInstance, field: "packagePath")}</td>
 			

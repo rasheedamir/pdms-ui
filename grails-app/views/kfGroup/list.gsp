@@ -17,6 +17,8 @@
 		<thead>
 			<tr>
 			
+				<g:sortableColumn property="id" title="${message(code: 'kfGroup.id.label', default: 'Id')}" />
+
 				<g:sortableColumn property="name" title="${message(code: 'kfGroup.name.label', default: 'Name')}" />
 			
 				<g:sortableColumn property="dateCreated" title="${message(code: 'kfGroup.dateCreated.label', default: 'Date Created')}" />
@@ -27,7 +29,9 @@
 		<g:each in="${kfGroupInstanceList}" status="i" var="kfGroupInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 			
-				<td><g:link action="show" id="${kfGroupInstance.id}">${fieldValue(bean: kfGroupInstance, field: "name")}</g:link></td>
+				<td><g:link action="show" id="${kfGroupInstance.id}">${fieldValue(bean: kfGroupInstance, field: "id")}</g:link></td>
+
+				<td>${fieldValue(bean: kfGroupInstance, field: "name")}</td>
 			
 				<td><g:formatDate date="${kfGroupInstance.dateCreated}" /></td>
 			

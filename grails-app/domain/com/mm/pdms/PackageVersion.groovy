@@ -1,12 +1,14 @@
 package com.mm.pdms
 
 class PackageVersion {
-
+	
 	String versionNumber
 	String packagePath
 	String comment
 	Date dateCreated
-
+	
+	static searchable = true
+	
 	static constraints = {
 		versionNumber (blank:false)
 		packagePath (blank:false)

@@ -17,6 +17,8 @@
 		<thead>
 			<tr>
 			
+				<g:sortableColumn property="id" title="${message(code: 'posAssemblyLog.id.label', default: 'Id')}" />
+			
 				<g:sortableColumn property="assemblyName" title="${message(code: 'posAssemblyLog.assemblyName.label', default: 'Assembly Name')}" />
 			
 				<g:sortableColumn property="assemblyVersion" title="${message(code: 'posAssemblyLog.assemblyVersion.label', default: 'Assembly Version')}" />
@@ -31,6 +33,8 @@
 		<g:each in="${posAssemblyLogInstanceList}" status="i" var="posAssemblyLogInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 			
+				<td>${fieldValue(bean: posAssemblyLogInstance, field: "id")}</td>
+
 				<td><g:link action="show" id="${posAssemblyLogInstance.id}">${fieldValue(bean: posAssemblyLogInstance, field: "assemblyName")}</g:link></td>
 			
 				<td>${fieldValue(bean: posAssemblyLogInstance, field: "assemblyVersion")}</td>

@@ -1,7 +1,5 @@
 <%@ page import="com.mm.pdms.PosCallLog" %>
 
-
-
 			<div class="control-group fieldcontain ${hasErrors(bean: posCallLogInstance, field: 'kfStoreId', 'error')} required">
 				<label for="kfStoreId" class="control-label"><g:message code="posCallLog.kfStoreId.label" default="Kf Store Id" /><span class="required-indicator">*</span></label>
 				<div class="controls">
