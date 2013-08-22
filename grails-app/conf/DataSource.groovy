@@ -1,10 +1,18 @@
 dataSource {
-    pooled = true
-    //driverClassName = "org.h2.Driver"
-    //username = "sa"
-    //password = ""
-	driverClassName = "com.mysql.jdbc.Driver"
-	dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+	//H2
+	// driverClassName = "org.h2.Driver"
+	// username = "sa"
+	// password = ""
+	
+	//MYSQL
+    // pooled = true
+	// driverClassName = "com.mysql.jdbc.Driver"
+	// dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+	
+	//ORACLE
+	pooled = true
+	driverClassName = "oracle.jdbc.driver.OracleDriver"
+	dialect= "org.hibernate.dialect.OracleDialect"
 }
 
 hibernate {
@@ -15,7 +23,67 @@ hibernate {
 
 // environment specific settings
 environments {
+	//ORACLE
 	development {
+		dataSource {
+			dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+			url = "jdbc:oracle:thin:@127.0.0.1:1521:XE"
+			username = "root"
+			password = "root"
+			
+			properties {
+				maxActive = -1
+				minEvictableIdleTimeMillis=1800000
+				timeBetweenEvictionRunsMillis=1800000
+				numTestsPerEvictionRun=3
+				testOnBorrow=true
+				testWhileIdle=true
+				testOnReturn=true
+				validationQuery="SELECT 1 FROM dual"
+			}
+		}
+	}
+	test {
+		dataSource {
+			dbCreate = "update"
+			url = "jdbc:oracle:thin:@127.0.0.1:1521:XE"
+			username = "root"
+			password = "root"
+			
+			properties {
+				maxActive = -1
+				minEvictableIdleTimeMillis=1800000
+				timeBetweenEvictionRunsMillis=1800000
+				numTestsPerEvictionRun=3
+				testOnBorrow=true
+				testWhileIdle=true
+				testOnReturn=true
+				validationQuery="SELECT 1 FROM dual"
+			}
+		}
+	}
+	production {
+		dataSource {
+			dbCreate = "update"
+			url = "jdbc:oracle:thin:@127.0.0.1:1521:XE"
+			username = "root"
+			password = "root"
+			
+			properties {
+				maxActive = -1
+				minEvictableIdleTimeMillis=1800000
+				timeBetweenEvictionRunsMillis=1800000
+				numTestsPerEvictionRun=3
+				testOnBorrow=true
+				testWhileIdle=true
+				testOnReturn=true
+				validationQuery="SELECT 1 FROM dual"
+			}
+		}
+	}
+	
+	//MYSQL
+	/*development {
 		dataSource {
 			dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
 			url = "jdbc:mysql://localhost/pdms_dev?useUnicode=yes&characterEncoding=UTF-8"
@@ -38,7 +106,9 @@ environments {
 			username = "root"
 			password = "root"
 		}
-	}
+	}*/
+	
+	//H2
     /*development {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
