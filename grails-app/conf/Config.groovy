@@ -93,8 +93,9 @@ log4j = {
 }
 
 grails.config.defaults.locations = [KickstartResources]
+
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.mm.pdms.User'
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.mm.pdms.ApplicationUser'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.mm.pdms.UserRole'
 grails.plugins.springsecurity.authority.className = 'com.mm.pdms.Role'
 grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap

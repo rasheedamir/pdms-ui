@@ -1,6 +1,6 @@
 package com.mm.pdms
 
-class User {
+class ApplicationUser {
 
 	transient springSecurityService
 

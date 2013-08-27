@@ -1,4 +1,7 @@
+import org.junit.internal.runners.statements.FailOnTimeout;
+
 import com.mm.pdms.*
+
 import grails.util.Environment
 
 class BootStrap {
@@ -8,13 +11,13 @@ class BootStrap {
 		switch (Environment.current) {
 			
 			case Environment.DEVELOPMENT:
+				//createRolesIfRequired()
 				createAdminUserIfRequired()
-				createRolesIfRequired()
 				break;
 
 			case Environment.PRODUCTION:
+				//createRolesIfRequired()
 				createAdminUserIfRequired()
-				createRolesIfRequired()
 				break;			
 		}
     }
@@ -26,16 +29,22 @@ class BootStrap {
 	 * Create admin user
 	 */
 	void createAdminUserIfRequired() {
-		if (!User.findByUsername("admin")) {
+		if (!ApplicationUser.findByUsername("admin")) {
 			println "Fresh Database. Creating ADMIN user."
-	        def adminUser = new User(
+	        def adminUser = new ApplicationUser(
 	                username: 'admin',
 	                password: 'admin',
 	                enabled: true).save(failOnError: true)
-			def adminRole = Role.findByAuthority('ROLE_ADMIN')
-			if (!adminUser.authorities.contains(adminRole)) {
-				UserRole.create adminUser, adminRole
-			}
+					
+			def userRole = Role.findByAuthority('ROLE_USER') ?: new Role(authority: 'ROLE_USER').save(failOnError: true)
+			println "userRole: " + userRole
+			def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
+			println "adminRole: " + adminRole			
+
+			UserRole.create adminUser, adminRole, true
+			UserRole.create adminUser, userRole, true
+			println "Both roles 'ROLE_ADMIN' & 'ROLE_USER' are assigned to 'ADMIN'"
+			
 		} else {
 			println "Existing admin user, skipping creation"
 		}
@@ -46,7 +55,9 @@ class BootStrap {
 	 */
 	void createRolesIfRequired() {
 		def userRole = Role.findByAuthority('ROLE_USER') ?: new Role(authority: 'ROLE_USER').save(failOnError: true)
+		println "userRole: " + userRole
 		def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
+		println "adminRole: " + adminRole
 	}
 }
 

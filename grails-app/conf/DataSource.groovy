@@ -10,6 +10,8 @@ dataSource {
 	// dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
 	
 	//ORACLE
+	url = "jdbc:oracle:thin:@192.168.1.13:1521:XE"
+	//url = "jdbc:oracle:thin:@10.40.64.87:1521:XE"
 	pooled = true
 	driverClassName = "oracle.jdbc.driver.OracleDriver"
 	dialect= "org.hibernate.dialect.OracleDialect"
@@ -27,9 +29,9 @@ environments {
 	development {
 		dataSource {
 			dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-			url = "jdbc:oracle:thin:@127.0.0.1:1521:XE"
-			username = "root"
-			password = "root"
+			//url = "jdbc:oracle:thin:@192.168.1.13:1521:XE"
+			username = "pdms_dev"
+			password = "pdms"
 			
 			properties {
 				maxActive = -1
@@ -45,10 +47,11 @@ environments {
 	}
 	test {
 		dataSource {
-			dbCreate = "update"
-			url = "jdbc:oracle:thin:@127.0.0.1:1521:XE"
-			username = "root"
-			password = "root"
+			dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+			//url = "jdbc:oracle:thin:@10.40.64.87:1521:XE"
+			//url = "jdbc:oracle:thin:@192.168.1.13:1521:XE"
+			username = "pdms_dev"
+			password = "pdms"
 			
 			properties {
 				maxActive = -1
@@ -64,10 +67,10 @@ environments {
 	}
 	production {
 		dataSource {
-			dbCreate = "update"
-			url = "jdbc:oracle:thin:@127.0.0.1:1521:XE"
-			username = "root"
-			password = "root"
+			dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+			//url = "jdbc:oracle:thin:@10.40.64.87:1521:XE"
+			username = "pdms_prod"
+			password = "pdms"
 			
 			properties {
 				maxActive = -1

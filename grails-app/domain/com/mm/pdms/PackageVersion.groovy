@@ -4,7 +4,7 @@ class PackageVersion {
 	
 	String versionNumber
 	String packagePath
-	String comment
+	String packageComment
 	Date dateCreated
 	
 	static searchable = true
@@ -12,7 +12,7 @@ class PackageVersion {
 	static constraints = {
 		versionNumber (blank:false)
 		packagePath (blank:false)
-		comment (nullable: true, maxSize : 1000)
+		packageComment (nullable: true, maxSize : 1000)
 		dateCreated ()
     }
 	
