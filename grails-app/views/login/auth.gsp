@@ -30,12 +30,13 @@
 					</div>
 				</div>
 				
-				<div id="remember_me_holder" class="control-group fieldcontain">
+				<!-- div id="remember_me_holder" class="control-group fieldcontain">
 					<label for='remember_me' class="control-label"><g:message code="springSecurity.login.remember.me.label"/></label>
 					<div class="controls">
 						<bs:checkBox class="span4" name="${rememberMeParameter}" value="${hasCookie}" />
 					</div>
-				</div>
+				</div -->
+				
 			</fieldset>
 			<div class="controls">
 				<input type='submit' id="submit" class="btn btn-success" value='${message(code: "springSecurity.login.button")}'/>
